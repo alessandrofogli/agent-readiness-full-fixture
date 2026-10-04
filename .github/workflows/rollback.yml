@@ -1,0 +1,21 @@
+name: rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: revision to roll back to (defaults to previous known-good)
+        required: false
+        default: previous
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Roll back deployment
+        run: ./scripts/rollback.sh "${{ inputs.revision }}"
+      - name: Verify health
+        run: echo "verify /health and error-rate dashboards — see docs/rollback.md"

@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+*.db
+dist/
+node_modules/
+.coverage
+htmlcov/
+.env
+profile.svg

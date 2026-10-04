@@ -1,0 +1,21 @@
+name: bundle-size
+
+on:
+  pull_request:
+    paths: ["packages/web/**"]
+
+jobs:
+  size-limit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - name: Check bundle size
+        run: npx size-limit

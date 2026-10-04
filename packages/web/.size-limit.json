@@ -1,0 +1,6 @@
+[
+  {
+    "path": "dist/bundle.js",
+    "limit": "50 kB"
+  }
+]

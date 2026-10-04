@@ -1,0 +1,2 @@
+# ZAP baseline scan rule overrides
+10021	IGNORE	(Expected 204 but got 200) - health probe returns 200

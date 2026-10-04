@@ -1,0 +1,37 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: make setup
+      - name: Lint
+        run: make lint
+      - name: Typecheck
+        run: make typecheck
+      - name: Version drift check
+        run: make drift-check
+      - name: Dead feature flag audit
+        run: make flags-audit
+      - name: Validate AGENTS.md
+        run: uv run python scripts/validate_agents_md.py
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: make setup
+      - name: Tests with coverage
+        run: uv run pytest --cov=api --cov=worker --cov-fail-under=70

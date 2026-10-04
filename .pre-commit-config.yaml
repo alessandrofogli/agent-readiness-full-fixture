@@ -1,0 +1,19 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+  - repo: local
+    hooks:
+      - id: agents-md-validate
+        name: validate AGENTS.md commands
+        entry: python scripts/validate_agents_md.py
+        language: system
+        pass_filenames: false
+      - id: flags-audit
+        name: dead feature flag audit
+        entry: python scripts/check_flags.py
+        language: system
+        pass_filenames: false

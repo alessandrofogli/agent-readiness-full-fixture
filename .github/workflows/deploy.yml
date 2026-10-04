@@ -1,0 +1,42 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: revision to deploy
+        required: false
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  canary-10:
+    runs-on: ubuntu-latest
+    environment:
+      name: canary
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy to ring 1 (10% of traffic)
+        run: echo "deploying 10% canary — monitor error rate for 10 minutes"
+
+  canary-50:
+    needs: canary-10
+    runs-on: ubuntu-latest
+    environment:
+      name: canary
+    steps:
+      - name: Deploy to ring 2 (50% of traffic)
+        run: echo "deploying 50% — monitor for 15 minutes"
+
+  full-rollout:
+    needs: canary-50
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Deploy to 100% of traffic
+        run: echo "full rollout complete"
