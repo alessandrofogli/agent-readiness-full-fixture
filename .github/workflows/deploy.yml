@@ -19,7 +19,7 @@ jobs:
     environment:
       name: canary
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Deploy to ring 1 (10% of traffic)
         run: echo "deploying 10% canary — monitor error rate for 10 minutes"
 
