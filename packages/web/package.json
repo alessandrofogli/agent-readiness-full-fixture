@@ -8,8 +8,8 @@
     "size": "size-limit"
   },
   "devDependencies": {
-    "esbuild": "^0.23.0",
-    "size-limit": "^11.1.0",
-    "@size-limit/preset-app": "^11.1.0"
+    "esbuild": "^0.28.2",
+    "size-limit": "^14.1.0",
+    "@size-limit/preset-app": "^14.1.0"
   }
 }
